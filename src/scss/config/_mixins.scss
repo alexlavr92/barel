@@ -1,0 +1,39 @@
+@mixin btn-white {
+  color: $color-second;
+  background-color: $color-main;
+}
+
+@mixin btn-dark {
+  color: $color-main;
+  background-color: $color-second;
+}
+
+@mixin btn-bronze {
+  color: $color-main;
+  background-color: $color-third;
+}
+
+@mixin flex-column {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+
+@mixin bg-style {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@mixin text-center {
+  text-align: center;
+}
+
+@mixin pointer {
+  cursor: pointer;
+}
+
+@mixin invalid-field {
+  border-color: #ff0000;
+}

@@ -1,0 +1,8 @@
+@import "scss/config/variables";
+@import "scss/config/mixins";
+
+.tabs-content {
+    &:not(.active) {
+        display: none;
+    }
+}

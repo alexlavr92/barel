@@ -1,0 +1,139 @@
+@import "scss/config/variables";
+@import "scss/config/mixins";
+
+.jquery-modal.blocker {
+    background-color: rgba($color-second, .7);
+    z-index: 3;
+
+    @media screen {
+        @media (max-width: 767px) {
+            padding: 15px;
+        }
+
+    }
+}
+
+.modal {
+    width: 75%;
+    padding: 0;
+    height: 85%;
+    max-width: none;
+    border-radius: 20px;
+    box-shadow: none;
+    background: transparent;
+    /*  overflow: hidden; */
+}
+
+.modal-wrapper {
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+
+    @media screen {
+        @media (max-width: 767px) {
+            // height: auto;
+            border-radius: 10px;
+        }
+
+    }
+}
+
+.modal a.close-modal {
+    background-image: url(/src/media/icon/close-modal.svg);
+    width: 4rem;
+    height: 4rem;
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    top: 0;
+    right: -4rem;
+
+    @media screen {
+        // @media (max-width: 1199px) {
+        //     top: -4rem;
+        //     right: 0;
+        // }
+
+        @media (max-width: 767px) {
+            top: -40px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background-size: 60%;
+        }
+    }
+}
+
+.modal-request {
+    width: 60%;
+    min-width: 1130px;
+
+    @media screen {
+        @media (max-width: 1439px) {
+            min-width: auto;
+            width: 80%;
+            height: 95%;
+        }
+
+        @media (max-width: 1199px) {
+            height: auto;
+            width: 70%;
+            max-width: 600px
+        }
+
+        @media (max-width: 767px) {
+            position: fixed;
+            max-width: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            width: 100%;
+            height: 100%;
+            padding: 0 15px;
+            background: $color-second;
+            border-radius: 0;
+
+            .modal-wrapper {
+                padding: 90px 0;
+                border-radius: 0;
+                height: auto;
+            }
+
+            a.close-modal {
+                top: 20px;
+                right: 15px;
+            }
+        }
+    }
+}
+
+.modal-request .request-form-inner {
+    height: 100%;
+}
+
+.modal-request .request-form-inner .img-wrapper {
+    height: 100%;
+
+    >img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+.modal-video {
+    @media screen {
+        @media (max-width: 1199px) {
+            width: 80%;
+            height: 50vw;
+        }
+
+        @media (max-width: 767px) {
+            width: 100%;
+            height: 51vw;
+        }
+    }
+}
