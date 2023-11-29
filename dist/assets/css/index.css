@@ -364,8 +364,8 @@ header.header-mini .header {
     height: 100vh;
     top: -30%;
     left: 60%;
-    -webkit-transform: rotate(19.631deg);
-            transform: rotate(19.631deg);
+    -webkit-transform: rotate(19.631deg) translate3d(0, 0, 0);
+            transform: rotate(19.631deg) translate3d(0, 0, 0);
     background: rgba(255, 154, 0, 0.1);
     -webkit-filter: blur(200px);
             filter: blur(200px);
@@ -6682,7 +6682,6 @@ button {
           justify-content: flex-start;
   position: relative;
   z-index: 0;
-  -webkit-transform: translate3d(0, 0, 0);
 }
 @media screen and (max-width: 1500px) {
   .advantages-items {
@@ -6772,8 +6771,8 @@ button {
           filter: blur(150px);
   top: 0;
   right: -20%;
-  -webkit-transform: rotate(19.631deg);
-          transform: rotate(19.631deg);
+  -webkit-transform: rotate(19.631deg) translate3d(0, 0, 0);
+          transform: rotate(19.631deg) translate3d(0, 0, 0);
 }
 @media screen and (max-width: 1199px) {
   .advantages-items:before {
@@ -6788,8 +6787,8 @@ button {
           filter: blur(150px);
   bottom: 0;
   left: -20%;
-  -webkit-transform: rotate(-160.369deg);
-          transform: rotate(-160.369deg);
+  -webkit-transform: rotate(-160.369deg) translate3d(0, 0, 0);
+          transform: rotate(-160.369deg) translate3d(0, 0, 0);
 }
 @media screen and (max-width: 1199px) {
   .advantages-items:after {

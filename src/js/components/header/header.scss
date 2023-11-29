@@ -360,7 +360,7 @@ header {
           height: 100vh;
           top: -30%;
           left: 60%;
-          transform: rotate(19.631deg);
+          transform: rotate(19.631deg) translate3d(0, 0, 0);
           background: rgba($color-third, .1);
           filter: blur(200px);
         }
