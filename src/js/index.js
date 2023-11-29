@@ -91,9 +91,9 @@ let AboutUsItemsHeight = function () {
 $(document).ready(function ($) {
   docWidth = document.body.clientWidth
   // console.log(docWidth)
-  AOS.init({
-    once: true,
-  });
+  // AOS.init({
+  //   once: true,
+  // });
 
   if ($('#player').length) {
     var tag = document.createElement('script');
