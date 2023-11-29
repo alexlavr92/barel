@@ -466,11 +466,57 @@ var ModalElem = exports.ModalElem = {
 
     this.events(ThisHash);
   },
+  initModalVideo: function initModalVideo() {
+    if ($('#player').length) {
+      // console.log(VideoHref)
+      var onYouTubeIframeAPIReady = function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '100%',
+          width: '100%',
+          videoId: VideoHref,
+          events: {
+            'onReady': onPlayerReady
+            // 'onStateChange': onPlayerStateChange
+          }
+        });
+        // console.log(player)
+      };
+      // 4. The API will call this function when the video player is ready.
+      var onPlayerReady = function onPlayerReady(event) {
+        event.target.playVideo();
+      }; // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var onPlayerStateChange = function onPlayerStateChange(event) {
+        console.log('ок');
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      };
+      var stopVideo = function stopVideo() {
+        player.stopVideo();
+      };
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      var VideoHref = $('#player').attr('video-id');
+      window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+      var done = false;
+    }
+  },
   events: function events(modalElem) {
     // console.log(modalElem)
     var $thisObj = this;
     $('body').on('modal:open', modalElem, function (event, modal) {
       console.log(event, modal);
+      console.log(modal.$elm);
+      if (modal.$elm.find('#player').length) $thisObj.initModalVideo();
       $thisObj.blockScroll('open');
     });
     $('body').on('modal:close', modalElem, function (event, modal) {
@@ -848,48 +894,12 @@ $(document).ready(function ($) {
   _aos["default"].init({
     once: true
   });
-  if ($('#player').length) {
-    // console.log(VideoHref)
-    var onYouTubeIframeAPIReady = function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '100%',
-        width: '100%',
-        videoId: VideoHref,
-        events: {
-          'onReady': onPlayerReady
-          // 'onStateChange': onPlayerStateChange
-        }
-      });
-      // console.log(player)
-    };
-    // 4. The API will call this function when the video player is ready.
-    var onPlayerReady = function onPlayerReady(event) {
-      event.target.playVideo();
-    }; // 5. The API calls this function when the player's state changes.
-    //    The function indicates that when playing a video (state=1),
-    //    the player should play for six seconds and then stop.
-    var onPlayerStateChange = function onPlayerStateChange(event) {
-      console.log('ок');
-      if (event.data == YT.PlayerState.PLAYING && !done) {
-        setTimeout(stopVideo, 6000);
-        done = true;
-      }
-    };
-    var stopVideo = function stopVideo() {
-      player.stopVideo();
-    };
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    // 3. This function creates an <iframe> (and YouTube player)
-    //    after the API code downloads.
-    var player;
-    var VideoHref = $('#player').attr('video-id');
-    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-    var done = false;
-  }
+  document.addEventListener('aos:in', function (_ref) {
+    var detail = _ref.detail;
+    if ($(detail).hasClass('contacts-wrapper')) {
+      InitedMap();
+    }
+  });
 
   // Header.initScroll();
   _header["default"].init();
@@ -925,88 +935,95 @@ $(document).ready(function ($) {
       modalHash: $(this).attr('data-id')
     });
   });
-  if ($('#map').length) {
-    var initYandexMap = function initYandexMap() {
-      var setImageSize, setImageOffset;
-      /*  if (docWidth >= 768) {
-         setImageSize = [55, 56]
-         setImageOffset = [0, -70]
-       }
-       else {
-         setImageSize = [35, 36]
-         setImageOffset = [10, -40]
-       } */
-      // Создание карты.
-      var myMap = new ymaps.Map("map", {
-          // Координаты центра карты.
-          // Порядок по умолчанию: «широта, долгота».
-          // Чтобы не определять координаты центра карты вручную,
-          // воспользуйтесь инструментом Определение координат.
-          center: [55.9930360687509, 92.79720850000002],
-          // Уровень масштабирования. Допустимые значения:
-          // от 0 (весь мир) до 19.
-          zoom: 17,
-          controls: ['zoomControl', 'fullscreenControl']
-        }, {
-          searchControlProvider: 'yandex#search'
-        }),
-        myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
-          /* hintContent: 'Собственный значок метки', */
-          /* balloonContent: 'Это красивая метка' */
-        }, {
-          // Опции.
-          // Необходимо указать данный тип макета.
-          iconLayout: 'default#image',
-          // Своё изображение иконки метки.
-          iconImageHref: _baloon["default"],
-          // Размеры метки.
-          iconImageSize: [60, 60]
-          // Смещение левого верхнего угла иконки относительно
-          // её "ножки" (точки привязки).
-          // iconImageOffset: setImageOffset
-        });
-
-      var SetMapCenter = function SetMapCenter(map) {
-        var pixelCenter = map.getGlobalPixelCenter();
-        var contactContentWidth = document.querySelector('.contacts-content').offsetWidth;
-
-        // console.log(pixelCenter, contactContentWidth)
-        var docWidthMap = document.body.clientWidth;
-        var mapOffset = 0;
-        if (docWidthMap >= 1200) mapOffset = document.querySelector('.contacts-content').offsetWidth / 2;
-
-        // console.log(mapOffset)
-        pixelCenter = [pixelCenter[0] + mapOffset, pixelCenter[1]];
-        // console.log(pixelCenter)
-        var geoCenter = map.options.get('projection').fromGlobalPixels(pixelCenter, map.getZoom());
-        map.setCenter(geoCenter);
-      };
-      SetMapCenter(myMap);
-      var ResizePlaceMark = function ResizePlaceMark() {
-        var MapSize = myMap.container.getSize();
-        // console.log(MapSize)
-        if (MapSize[0] <= 768) {
-          myPlacemark.options.set({
-            'iconImageSize': [40, 40]
+  var InitedMap = function InitedMap() {
+    if ($('#map').length) {
+      var initYandexMap = function initYandexMap() {
+        var setImageSize, setImageOffset;
+        /*  if (docWidth >= 768) {
+           setImageSize = [55, 56]
+           setImageOffset = [0, -70]
+         }
+         else {
+           setImageSize = [35, 36]
+           setImageOffset = [10, -40]
+         } */
+        // Создание карты.
+        var myMap = new ymaps.Map("map", {
+            // Координаты центра карты.
+            // Порядок по умолчанию: «широта, долгота».
+            // Чтобы не определять координаты центра карты вручную,
+            // воспользуйтесь инструментом Определение координат.
+            center: [55.9930360687509, 92.79720850000002],
+            // Уровень масштабирования. Допустимые значения:
+            // от 0 (весь мир) до 19.
+            zoom: 17,
+            controls: ['zoomControl', 'fullscreenControl']
+          }, {
+            searchControlProvider: 'yandex#search'
+          }),
+          myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+            /* hintContent: 'Собственный значок метки', */
+            /* balloonContent: 'Это красивая метка' */
+          }, {
+            // Опции.
+            // Необходимо указать данный тип макета.
+            iconLayout: 'default#image',
+            // Своё изображение иконки метки.
+            iconImageHref: _baloon["default"],
+            // Размеры метки.
+            iconImageSize: [60, 60]
+            // Смещение левого верхнего угла иконки относительно
+            // её "ножки" (точки привязки).
+            // iconImageOffset: setImageOffset
           });
-        } else {
-          myPlacemark.options.set({
-            'iconImageSize': [60, 60]
-          });
-        }
-      };
-      ResizePlaceMark();
-      myMap.geoObjects.add(myPlacemark);
-      myMap.container.events.add("sizechange", function (event) {
-        // const MapSize = myMap.container.getSize()
-        // SetMapCenter(myMap)
 
+        var SetMapCenter = function SetMapCenter(map) {
+          var pixelCenter = map.getGlobalPixelCenter();
+          var contactContentWidth = document.querySelector('.contacts-content').offsetWidth;
+
+          // console.log(pixelCenter, contactContentWidth)
+          var docWidthMap = document.body.clientWidth;
+          var mapOffset = 0;
+          if (docWidthMap >= 1200) mapOffset = document.querySelector('.contacts-content').offsetWidth / 2;
+
+          // console.log(mapOffset)
+          pixelCenter = [pixelCenter[0] + mapOffset, pixelCenter[1]];
+          // console.log(pixelCenter)
+          var geoCenter = map.options.get('projection').fromGlobalPixels(pixelCenter, map.getZoom());
+          map.setCenter(geoCenter);
+        };
         SetMapCenter(myMap);
+        var ResizePlaceMark = function ResizePlaceMark() {
+          var MapSize = myMap.container.getSize();
+          // console.log(MapSize)
+          if (MapSize[0] <= 768) {
+            myPlacemark.options.set({
+              'iconImageSize': [40, 40]
+            });
+          } else {
+            myPlacemark.options.set({
+              'iconImageSize': [60, 60]
+            });
+          }
+        };
         ResizePlaceMark();
-        // console.log(myMap.container.getSize())
-      });
-    };
-    ymaps.ready(initYandexMap);
+        myMap.geoObjects.add(myPlacemark);
+        myMap.container.events.add("sizechange", function (event) {
+          // const MapSize = myMap.container.getSize()
+          // SetMapCenter(myMap)
+
+          SetMapCenter(myMap);
+          ResizePlaceMark();
+          // console.log(myMap.container.getSize())
+        });
+      };
+      ymaps.ready(initYandexMap);
+    }
+  };
+
+  // console.log($('.contacts-wrapper.aos-animate').length)
+  if ($('.contacts-wrapper.aos-animate').length) {
+    InitedMap();
   }
   if ($('.tabs-wrapper').length) $.each($('.tabs-wrapper'), function () {
     _tabs.Tabs.init({

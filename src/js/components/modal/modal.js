@@ -51,11 +51,62 @@ export const ModalElem = {
         });
         this.events(ThisHash)
     },
+    initModalVideo: function () {
+        if ($('#player').length) {
+            var tag = document.createElement('script');
+
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // 3. This function creates an <iframe> (and YouTube player)
+            //    after the API code downloads.
+            var player;
+            const VideoHref = $('#player').attr('video-id')
+            // console.log(VideoHref)
+            function onYouTubeIframeAPIReady() {
+                player = new YT.Player('player', {
+                    height: '100%',
+                    width: '100%',
+                    videoId: VideoHref,
+                    events: {
+                        'onReady': onPlayerReady,
+                        // 'onStateChange': onPlayerStateChange
+                    }
+                });
+                // console.log(player)
+            }
+            window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+            // 4. The API will call this function when the video player is ready.
+            function onPlayerReady(event) {
+                event.target.playVideo();
+            }
+
+            // 5. The API calls this function when the player's state changes.
+            //    The function indicates that when playing a video (state=1),
+            //    the player should play for six seconds and then stop.
+            var done = false;
+            function onPlayerStateChange(event) {
+                console.log('ок')
+                if (event.data == YT.PlayerState.PLAYING && !done) {
+                    setTimeout(stopVideo, 6000);
+                    done = true;
+                }
+            }
+            function stopVideo() {
+                player.stopVideo();
+            }
+        }
+    },
     events: function (modalElem) {
         // console.log(modalElem)
         const $thisObj = this
         $('body').on('modal:open', modalElem, function (event, modal) {
             console.log(event, modal)
+            console.log(modal.$elm)
+            if (modal.$elm.find('#player').length)
+                $thisObj.initModalVideo()
             $thisObj.blockScroll('open')
         })
         $('body').on('modal:close', modalElem, function (event, modal) {
