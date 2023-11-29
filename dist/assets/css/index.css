@@ -5965,6 +5965,7 @@ button {
   -webkit-filter: blur(150px);
           filter: blur(150px);
   z-index: -1;
+  will-change: auto;
   -webkit-animation: about-us-anim 10s linear infinite;
           animation: about-us-anim 10s linear infinite;
 }
