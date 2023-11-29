@@ -1394,7 +1394,7 @@ button.swiper-pagination-bullet {
 }
 @media screen and (max-width: 1199px) {
   .reviews-wrapper > .reviews-back {
-    background: rgba(255, 255, 255, 0.15);
+    display: none;
   }
 }
 @media screen and (max-width: 1199px) {
@@ -5929,6 +5929,7 @@ button {
   gap: 30px;
   position: relative;
   width: 50vw;
+  -webkit-transform: translate3d(0, 0, 0);
 }
 @media screen and (max-width: 1199px) {
   .about-us_items {
@@ -6528,6 +6529,7 @@ button {
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
 }
 @media screen and (max-width: 1540px) {
   .work-wrapper_content .work-wrapper_items {
@@ -6557,6 +6559,9 @@ button {
   gap: 10px;
   font-family: "Source Sans Pro";
   font-weight: bold;
+}
+.work-wrapper_content .work-wrapper_item.aos-animate {
+  -webkit-transform: translate3d(0, 0, 0);
 }
 @media screen and (max-width: 1199px) {
   .work-wrapper_content .work-wrapper_item {
@@ -6677,6 +6682,7 @@ button {
           justify-content: flex-start;
   position: relative;
   z-index: 0;
+  -webkit-transform: translate3d(0, 0, 0);
 }
 @media screen and (max-width: 1500px) {
   .advantages-items {
