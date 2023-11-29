@@ -5004,6 +5004,7 @@ body img {
 body * {
   -webkit-box-sizing: inherit;
           box-sizing: inherit;
+  outline: none;
 }
 
 a {
