@@ -5210,6 +5210,8 @@ h2,
           transform: translate3d(-50%, -50%, 0);
   -webkit-animation: mouse-anim 3s infinite;
           animation: mouse-anim 3s infinite;
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
 }
 .btn-down:hover,
 .btn-up:hover {
