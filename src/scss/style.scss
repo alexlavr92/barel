@@ -330,6 +330,7 @@ Theme Version:	1.0
     background: rgba($color-third, .2);
     filter: blur(150px);
     z-index: -1;
+    will-change: auto;
     animation: about-us-anim 10s linear infinite;
 
     @media screen {
