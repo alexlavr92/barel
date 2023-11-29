@@ -17,7 +17,7 @@ const Header = {
     if (docWidth < 1200) {
       if (this.headerNav.parent('.header').length) {
         this.headerLogo.prependTo(this.headerInner)
-        this.headerNav.prependTo('.header-mob-content_inner')
+        this.headerNav.prependTo('.header-mob-content_wrapper')
         options.headerElem.removeClass('p-fixed')
         if (options.headerElem.find('.header-mob-content.show').length)
           BlockScroll.open()
