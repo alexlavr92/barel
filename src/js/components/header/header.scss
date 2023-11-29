@@ -397,8 +397,6 @@ header {
 
         .header-mob-content_back {
           &:before {
-            top: 0;
-            left: 50%;
             filter: blur(150px);
           }
         }

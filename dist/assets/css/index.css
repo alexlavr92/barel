@@ -395,8 +395,6 @@ header.header-mini .header {
     padding: 90px 0 60px;
   }
   .header-mob-content_inner .header-mob-content_wrapper .header-mob-content_back:before {
-    top: 0;
-    left: 50%;
     -webkit-filter: blur(150px);
             filter: blur(150px);
   }
