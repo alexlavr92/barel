@@ -31,9 +31,20 @@
     overflow: hidden;
 
     @media screen {
+        @media (max-width: 1199px) {
+            iframe {
+                border-radius: 20px;
+                overflow: hidden;
+            }
+        }
+
         @media (max-width: 767px) {
             // height: auto;
             border-radius: 10px;
+
+            iframe {
+                border-radius: 10px;
+            }
         }
 
     }
